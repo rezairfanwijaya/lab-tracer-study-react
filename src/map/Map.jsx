@@ -22,7 +22,7 @@ const Map = () => {
                 />
 
                 {Alumnis && Alumnis.map((alumni) => (
-                    <div className="marker" id={alumni.id}>
+                    <div className="marker" key={alumni.id}>
                         <Marker position={[alumni.latitude, alumni.longitude]}>
                             <Popup>
                                 <h2>Nama: {alumni.name}</h2>
