@@ -2,17 +2,17 @@ import { useState, useEffect } from "react";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 
 const Map = () => {
-    const URL = "http://localhost:9090/tracers"
-    const [Alumnis, setAlumnis] = useState([])
+    const URL = "http://localhost:9090/tracers/city"
+    const [City, setCity] = useState([])
 
     useEffect(() => {
         fetch(URL)
             .then((res) => { return res.json() })
-            .then((data) => setAlumnis(data))
+            .then((data) => setCity(data.data))
 
     }, [URL])
 
-    console.log(Alumnis)
+    console.log(City)
 
     return (
         <>
@@ -21,13 +21,13 @@ const Map = () => {
                     url="https://tile.jawg.io/jawg-sunny/{z}/{x}/{y}.png?access-token=3SGAV6Zv17P9yOYDs6XRFI4xQDECOqZZFt80Jsslwomo9RTQ572gCylyVzE8vDuv"
                 />
 
-                {Alumnis && Alumnis.map((alumni) => (
-                    <div className="marker" key={alumni.id}>
-                        <Marker position={[alumni.latitude, alumni.longitude]}>
+                {City && City.map((city) => (
+                    <div className="marker" key={city.id}>
+                        <Marker position={[city.latitude, city.longitude]}>
                             <Popup>
-                                <h2>Nama: {alumni.name}</h2>
-                                <p>Job: {alumni.job}</p>
-                                <p>City: {alumni.city}</p>
+                                <h3>City: {city.city}</h3>
+                                <p>Total : {city.total}</p>
+
                             </Popup>
                         </Marker>
                     </div>
