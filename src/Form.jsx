@@ -5,12 +5,15 @@ const Form = () => {
     const [Name, setName] = useState('')
     const [City, setCity] = useState('')
     const [Job, setJob] = useState('')
+    const [IsLoading, setIsLoading] = useState(false)
 
     const URL = "http://localhost:9090/tracer"
     const Submit = (e) => {
         e.preventDefault()
-        const newAlumni = { Name, City, Job }
 
+        const newAlumni = { Name, City, Job }
+        
+        setIsLoading(true)
 
         fetch(URL, {
             method: "post",
@@ -21,8 +24,10 @@ const Form = () => {
         .then((data) => {
             if (data.meta.code === 400) {
                 alert(data.data)
+                setIsLoading(false)
             }else{
                alert(data.meta.status) 
+               setIsLoading(false)
             }
         })
 
@@ -49,7 +54,8 @@ const Form = () => {
             <br />
             <br />
 
-            <button type="submit">Submit</button>
+            {!IsLoading && <button type="submit">Submit</button>}
+            {IsLoading && <button type="submit" disabled>Loading...</button>}
             <br />
             <br />
             <Link to="/map">GO TO MAP</Link>
